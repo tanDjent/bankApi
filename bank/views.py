@@ -15,6 +15,7 @@ class BranchesViewSet(viewsets.ModelViewSet):
         name=self.request.query_params.get("q")
         limit=int(self.request.query_params.get("limit"))    
         offset=int(self.request.query_params.get("offset"))
+        limit = limit + offset
         if not name:
             queryset=Branches.objects.all().order_by('ifsc')[offset:limit]
         else:
@@ -28,5 +29,6 @@ class BranchAutocompleteViewSet(viewsets.ModelViewSet):
         branchName=self.request.query_params.get("q")     
         limit=int(self.request.query_params.get("limit"))    
         offset=int(self.request.query_params.get("offset"))
+        limit = limit + offset
         queryset=Branches.objects.filter(branch__icontains=branchName).order_by('ifsc')[offset:limit]
         return queryset
